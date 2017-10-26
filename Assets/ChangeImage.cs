@@ -13,11 +13,11 @@ public class ChangeImage : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject arcamera = GameObject.FindGameObjectWithTag ("arcamera");
+		var arcamera = GameObject.FindGameObjectWithTag ("arcamera");
 		downloadimages =  arcamera.GetComponent<DownloadImages>();
-		GameObject message = GameObject.FindGameObjectWithTag ("message");
+		var message = GameObject.FindGameObjectWithTag ("message");
 		messagetm = message.GetComponent<TextMesh> ();
-		GameObject cube = GameObject.FindGameObjectWithTag ("target");
+		var cube = GameObject.FindGameObjectWithTag ("target");
 		cuberenderer = cube.GetComponent<Renderer> ();
 		BASE_TEXTURE = Application.temporaryCachePath;
 
@@ -30,9 +30,9 @@ public class ChangeImage : MonoBehaviour {
 		if (i > downloadimages.getMaxrange()-1) {
 			i = 0;
 		}
-		//Texture[] textures = Resources.LoadAll<Texture>(BASE_TEXTURE);
-		Texture2D textures = new Texture2D (0, 0);
-		textures.LoadImage (LoadBin (BASE_TEXTURE + "/" + i + ".png"));
+		
+		var textures = new Texture2D (0, 0);
+		textures.LoadImage (Utilities.LoadbinaryBytes(BASE_TEXTURE + "/" + i + ".png"));
 		cuberenderer.material.mainTexture = textures;
 		messagetm.text = downloadimages.getMessage(i);
 		i++;
@@ -43,19 +43,12 @@ public class ChangeImage : MonoBehaviour {
 			i = downloadimages.getMaxrange()-1;
 		}
 		//Texture[] textures = Resources.LoadAll<Texture>(BASE_TEXTURE);
-		Texture2D textures = new Texture2D(0,0);
-		textures.LoadImage (LoadBin (BASE_TEXTURE + "/" + i + ".png"));
+		var textures = new Texture2D(0,0);
+		textures.LoadImage (Utilities.LoadbinaryBytes(BASE_TEXTURE + "/" + i + ".png"));
 		cuberenderer.material.mainTexture = textures;
 		messagetm.text = downloadimages.getMessage (i);
 		i++;
 	}
-	byte[] LoadBin(string path){
-		using (var fs = new FileStream(path, FileMode.Open) ) {
-			using (var br = new BinaryReader(fs)) {
-				var buf = br.ReadBytes( (int)br.BaseStream.Length);
-				return buf;
-			}
-		}
-	}
+
 }
 

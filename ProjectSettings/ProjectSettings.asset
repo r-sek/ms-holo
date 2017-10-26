@@ -522,7 +522,7 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: MS-nakasato
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: C:\Users\pasuco\Documents\MS_nakasato\MS-nakasato\Assets\WSATestCertificate.pfx
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany
