@@ -23,7 +23,7 @@ public class DownloadImages : MonoBehaviour {
     void Update() {
     }
 
-    public Texture readByBinary(byte[] bytes) {
+    public Texture2D readByBinary(byte[] bytes) {
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
         return texture;
@@ -31,16 +31,13 @@ public class DownloadImages : MonoBehaviour {
 
     IEnumerator GetFile() {
         messages = new List<string>();
-        var msg = new List<string>();
         var img = new List<string>();
-        var result = new WWW(PICTURE_URL);
         using (var www = new UnityWebRequest(PICTURE_URL)) {
             yield return www.Send();
             if (www.isNetworkError) {
             }
             else {
                 var jo = new JSONObject(www.downloadHandler.text);
-
                 for (var i = 0; i < jo.Count; i++) {
                     var json = jo[i];
                     var jmsg = json.GetField("message");
@@ -51,9 +48,9 @@ public class DownloadImages : MonoBehaviour {
             }
         }
         
-        for (var i = 0; i < messages.Count; i++) {
+        for (var i = 0; i < img.Count; i++) {
             var path = SERVER_URL + img[i];
-            Debug.Log(SERVER_URL + img[i] + "To" + cae + "/" + i + ".png");
+            
             using (var www = UnityWebRequest.Get(path)) {
                 yield return www.Send();
                 if (www.isNetworkError) {

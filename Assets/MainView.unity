@@ -193,6 +193,11 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!4 &53865574 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4000010560871102, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 633349041}
 --- !u!1001 &633349041
 Prefab:
   m_ObjectHideFlags: 0
@@ -329,8 +334,8 @@ GameObject:
   - component: {fileID: 850152744}
   - component: {fileID: 850152743}
   - component: {fileID: 850152740}
-  - component: {fileID: 850152741}
   - component: {fileID: 850152742}
+  - component: {fileID: 850152741}
   m_Layer: 0
   m_Name: ARCamera
   m_TagString: arcamera
@@ -357,11 +362,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 850152739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 415ac9fdf2d5a4cb9af907ca84d161cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 738c4489048efcd43a5beb7baae3d48b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 0, y: 0, z: 0}
-  end: {x: 0, y: 0, z: 0}
 --- !u!114 &850152742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,13 +406,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4114ca95ba12f394a8ad43abfc86745c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mWorldCenterMode: 1
+  mWorldCenterMode: 2
   mWorldCenter: {fileID: 0}
-  mCentralAnchorPoint: {fileID: 0}
-  mParentAnchorPoint: {fileID: 0}
+  mCentralAnchorPoint: {fileID: 53865574}
+  mParentAnchorPoint: {fileID: 53865574}
   mPrimaryCamera: {fileID: 0}
   mSecondaryCamera: {fileID: 0}
-  mWereBindingFieldsExposed: 0
+  mWereBindingFieldsExposed: 1
 --- !u!81 &850152745
 AudioListener:
   m_ObjectHideFlags: 0

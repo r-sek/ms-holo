@@ -30,25 +30,11 @@ public class ChangeImage : MonoBehaviour {
 		if (i > downloadimages.getMaxrange()-1) {
 			i = 0;
 		}
-		
 		var textures = new Texture2D (0, 0);
 		textures.LoadImage (Utilities.LoadbinaryBytes(BASE_TEXTURE + "/" + i + ".png"));
 		cuberenderer.material.mainTexture = textures;
 		messagetm.text = downloadimages.getMessage(i);
 		i++;
 	}
-	public void textureback(){
-		i--;
-		if (i <= 0) {
-			i = downloadimages.getMaxrange()-1;
-		}
-		//Texture[] textures = Resources.LoadAll<Texture>(BASE_TEXTURE);
-		var textures = new Texture2D(0,0);
-		textures.LoadImage (Utilities.LoadbinaryBytes(BASE_TEXTURE + "/" + i + ".png"));
-		cuberenderer.material.mainTexture = textures;
-		messagetm.text = downloadimages.getMessage (i);
-		i++;
-	}
 
 }
-
