@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using System.Collections;
 using UnityEngine;
 
 namespace HoloToolkit.Unity.InputModule
@@ -10,14 +11,25 @@ namespace HoloToolkit.Unity.InputModule
     /// </summary>
     public class SetGlobalListener : MonoBehaviour
     {
-        private void Start()
+        private void OnEnable()
         {
             InputManager.Instance.AddGlobalListener(gameObject);
         }
 
+        private void OnDisable()
+        {
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.RemoveGlobalListener(gameObject);
+            }
+        }
+
         private void OnDestroy()
         {
-            InputManager.Instance.RemoveGlobalListener(gameObject);
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.RemoveGlobalListener(gameObject);
+            }
         }
     }
 }

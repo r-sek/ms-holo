@@ -1,59 +1,115 @@
-﻿using System;
-using System.Collections;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UniRx;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PostData : MonoBehaviour {
-    private const string SERVER_URL = "http://superkuma.net/postData";
-    private List<Sprite> sprites;
+    private const string SERVER_URL = "http://superkuma.net/api/json";
+
     private List<string> fileList;
     private string text = "";
     private RectTransform content;
     private int index = 0;
     private const string FILE_HEADER = "file://";
     private string filepath = "";
+    private Texture2D postTexture;
+    private byte[] postImageBytes;
+    private Image img;
+    private string fileName = "";
 
-
-    // Use this for initialization
     void Start() {
-        sprites = new List<Sprite>();
+        postTexture = new Texture2D(0, 0);
+        postImageBytes = new byte[0];
+        img = GameObject.Find("Canvas/Image").GetComponent<Image>();
 
         // 縦固定
         Screen.orientation = ScreenOrientation.Portrait;
 
-        var btn = GameObject.Find("Canvas/SubmitBtn").GetComponent<Button>();
+        var submitBtn = GameObject.Find("Canvas/SubmitBtn").GetComponent<Button>();
         var inputField = GameObject.Find("Canvas/InputField").GetComponent<InputField>();
 
         var returnBtn = GameObject.Find("Canvas/ReturnBtn").GetComponent<Button>();
-        var path = GetDirPath();
-        fileList = GetFilePathList(path);
+        var dirPath = GetDirPath();
+        fileList = GetFilePathList(dirPath);
 
-        btn.onClick.AddListener(() => { StartCoroutine(SendData()); });
+        var progress = new ScheduledNotifier<float>();
+        //progress.Subscribe(prog => Debug.Log(prog));
 
-        inputField.onEndEdit.AddListener(s => { text = s; });
-        inputField.onValueChanged.AddListener(s => { inputField.text = s; });
-        returnBtn.onClick.AddListener(() => {
-            // メイン画面に戻る
-            SceneManager.LoadScene("MainView");
-        });
+        submitBtn.OnClickAsObservable()
+            .ThrottleFirst(TimeSpan.FromMilliseconds(1000))
+            .Subscribe(_ => {
+                var formdata = new WWWForm();
+
+                formdata.AddField("name", "gest");
+                if (!text.Equals(value: "")) {
+                    formdata.AddField("message", text);
+                }
+                if (postImageBytes.Length > 0) {
+                    formdata.AddBinaryData("upload_file", postImageBytes, fileName);
+                }
+                ObservableWWW.Post(SERVER_URL, formdata, progress)
+                    .Subscribe(
+                        result => {
+                            img.color = Color.clear;
+                            postImageBytes = new byte[0];
+                            inputField.text = "";
+                            text = "";
+                            Debug.unityLogger.Log("result",result);
+
+                            Debug.Log("success");
+                        }, 
+                        error => {
+                            GameObject.Find("Dialog").GetComponent<Dialog>().ViewDialog();
+                            Debug.Log("ng");
+                        }
+                    );
+            });
+
+        returnBtn.OnClickAsObservable()
+            .Subscribe(
+                _ => SceneManager.LoadScene("MainView")
+            );
+
+        inputField.OnEndEditAsObservable()
+            .Subscribe(
+                s => { text = s; }
+            );
 
         content = GameObject.Find("Canvas/Scroll View/Viewport/Content").GetComponent<RectTransform>();
         content.sizeDelta = new Vector2(200 * fileList.Count, 0);
         var srect = GameObject.Find("Canvas/Scroll View").GetComponent<ScrollRect>();
         srect.normalizedPosition = new Vector2(0, 0);
-        for (var i = 0; i < fileList.Count; i++) {
-            var item = Instantiate(Resources.Load("Prefab/AA")) as GameObject;
-            item.transform.SetParent(content, false);
-        }
 
-        StartCoroutine(LoadTexture2D());
-        foreach (var str in fileList) {
-            Debug.Log(str);
+        foreach (var s in fileList) {
+            var item = Instantiate(Resources.Load("Prefab/AA")) as GameObject;
+            if (item == null) continue;
+            item.GetComponent<ImageObject>().Filepath = s;
+            item.GetComponent<Image>().sprite =
+                Utilities.GetSpriteFromTexture2D(Utilities.GetTexture2DFromBytes(Utilities.GetImageByte(s)));
+            item.transform.SetParent(content, false);
+            var btn = item.GetComponent<Button>();
+            btn.OnClickAsObservable()
+                .Subscribe(_ => {
+                    filepath = btn.GetComponent<ImageObject>().Filepath;
+                    var n = new FileInfo(filepath);
+                    fileName = n.Name;
+                    Debug.unityLogger.Log("fileName", fileName);
+#if UNITY_ANDROID
+                    postImageBytes = AndroidImageRotate(filepath);
+                    postTexture.LoadImage(postImageBytes);
+#else
+                    postTexture.LoadImage(Utilities.LoadbinaryBytes(filepath));
+                    postImageBytes = Utilities.LoadbinaryBytes(filepath);
+#endif
+                    Debug.unityLogger.Log("img", img);
+                    img.sprite = Utilities.GetSpriteFromTexture2D(postTexture);
+                    img.color = Color.white;
+                });
         }
     }
 
@@ -61,125 +117,31 @@ public class PostData : MonoBehaviour {
     void Update() {
     }
 
-    private byte[] GetBytesFromMedia(string path) {
-        using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read)) {
-            using (var bin = new BinaryReader(fs)) {
-                return bin.ReadBytes((int) bin.BaseStream.Length);
-            }
-        }
-    }
-
-    private IEnumerator LoadTexture2D() {
-        foreach (var path in fileList) {
-            var tex = new byte[0];
-
-            if (!File.Exists(path)) {
-                yield break;
-            }
-#if UNITY_ANDROID
-            using (var p = new AndroidJavaClass("jp.ac.hal.unityandroidplugin.FileAccessKt")) {
-                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
-                    using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
-                        using (var context = activity.Call<AndroidJavaObject>("getApplicationContext")) {
-                            tex = p.CallStatic<byte[]>("getThumbnails", context, path);
-                        }
-                    }
-                }
-            }
-#else
-            using (var www = new WWW(FILE_HEADER + path)) {
-                while (!www.isDone) {
-                    yield return new WaitForEndOfFrame();
-                }
-                 tex = www.bytes;
-            }
-#endif
-            var t2D = new Texture2D(2, 2, TextureFormat.ATC_RGB4, false);
-            t2D.LoadImage(tex);
-            t2D.Apply(true, true);
-            var sprite = GetSpriteFromTexture2D(t2D);
-            sprites.Add(sprite);
-        }
-        SetImage();
-    }
-
-    private IEnumerator SendData() {
-        // todo: 暫定 1番目取得
-        filepath = fileList[0];
-
-        var bytes = GetBytesFromMedia(filepath);
-        var formdata = new WWWForm();
-
-        formdata.AddField("name", "gest");
-        if (text != "") {
-            formdata.AddField("message", text);
-        }
-        if (bytes.Length != 0) {
-            formdata.AddBinaryData("uploadfile", bytes);
-        }
-
-        using (var www = UnityWebRequest.Post(SERVER_URL, formdata)) {
-            yield return www.Send();
-
-            if (www.isNetworkError) {
-                Debug.Log("send date failed");
-                Debug.Log(www.error);
-            }
-            else {
-                Debug.Log("success");
-            }
-        }
-    }
-
-    private void SetImage() {
-        foreach (var btn in content.GetComponentsInChildren<Button>()) {
-            Debug.unityLogger.Log("sprite", sprites.Count);
-            btn.GetComponent<Image>().sprite = sprites[0];
-            btn.onClick.AddListener(() => {
-                ///ここ書いて
-                /// 
-                /// filepath に
-                /// 
-                /// 
-                /// 
-                /// 
-            });
-            sprites.RemoveAt(0);
-            if (sprites.Count == 0) {
-                break;
-            }
-        }
-    }
-
-    private Sprite GetSpriteFromTexture2D(Texture2D t2D) {
-        Sprite sprite = null;
-        if (t2D) {
-            sprite = Sprite.Create(t2D, new Rect(0, 0, t2D.width, t2D.height), Vector2.zero);
-        }
-        return sprite;
-    }
-
     private string GetDirPath() {
 #if UNITY_ANDROID
         using (var p = new AndroidJavaClass("jp.ac.hal.unityandroidplugin.FileAccessKt")) {
             return p.CallStatic<string>("getFilePath");
         }
-        using (var plugin = new AndroidJavaClass("jp.ac.hal.androidplugin.FileAccessKt")) {
-            return plugin.CallStatic<string>("FileAccess");
-        }
-#elif UNITY_METRO
-        return null;
 #else
         return Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 #endif
     }
 
     private List<string> GetFilePathList(string dirPath) {
-        var patterns = new[] {".jpg", ".png", ".mp4"};
+        var patterns = new[] {".jpg", ".png"};
         var list = Directory.EnumerateFiles(dirPath, "*.*", SearchOption.AllDirectories)
             .Where(file => patterns.Any(pattern => file.ToLower().EndsWith(pattern)) &&
                            !(file.IndexOf("/.thumbnails/", StringComparison.Ordinal) > 0))
+            .OrderByDescending(File.GetLastWriteTime)
             .Skip(index).Take(20).ToList();
         return list;
     }
+
+#if UNITY_ANDROID
+    private byte[] AndroidImageRotate(string path) {
+        using (var plugin = new AndroidJavaClass("jp.ac.hal.unityandroidplugin.FileAccessKt")) {
+            return plugin.CallStatic<byte[]>("imageRotate", path);
+        }
+    }
+#endif
 }
