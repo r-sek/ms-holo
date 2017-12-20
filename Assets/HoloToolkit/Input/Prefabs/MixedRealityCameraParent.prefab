@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 81867938468442352}
   - component: {fileID: 114061490341948574}
   - component: {fileID: 114504390558679740}
+  - component: {fileID: 114528539918232996}
   m_Layer: 0
   m_Name: MixedRealityCamera
   m_TagString: MainCamera
@@ -236,7 +237,7 @@ GameObject:
   - component: {fileID: 114812681035175298}
   m_Layer: 0
   m_Name: MixedRealityCameraParent
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -531,7 +532,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!23 &23322403167181422
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -541,6 +541,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -556,6 +557,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -665,6 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FloorQuad: {fileID: 1520281459093612, guid: 08d25ccfbbc595b4a820c7edd551d095, type: 2}
+  boundaryHeight: 10
 --- !u!114 &114225625019075894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -736,6 +739,19 @@ MonoBehaviour:
   CameraClearFlags_TransparentDisplay: 2
   BackgroundColor_TransparentDisplay: {r: 0, g: 0, b: 0, a: 0}
   HoloLensQualityLevel: 0
+--- !u!114 &114528539918232996
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372541880982678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1826476478, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWorldCenterMode: 2
+  mWorldCenter: {fileID: 0}
 --- !u!114 &114690106885971528
 MonoBehaviour:
   m_ObjectHideFlags: 1

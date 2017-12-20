@@ -1,7 +1,8 @@
-﻿using System;
-using UniRx;
+﻿using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using DateTime = System.DateTime;
+using TimeSpan = System.TimeSpan;
 
 public class SwipeGesture : MonoBehaviour {
     private float thresholdSecond = 1.0f;
@@ -11,26 +12,46 @@ public class SwipeGesture : MonoBehaviour {
     private Vector2 startPosition;
 
     private Subject<Unit> onSwipeLeft = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnSwipeLeft => onSwipeLeft;
+
+    public Subject<Unit> OnSwipeLeft {
+        get { return onSwipeLeft; }
+    }
 
     private Subject<Unit> onSwipeRight = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnSwipeRight => onSwipeRight;
+
+    public Subject<Unit> OnSwipeRight {
+        get { return onSwipeRight; }
+    }
 
     private Subject<Unit> onSwipeDown = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnSwipeDown => onSwipeDown;
+
+    public Subject<Unit> OnSwipeDown {
+        get { return onSwipeDown; }
+    }
 
     private Subject<Unit> onSwipeUp = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnSwipeUp => onSwipeUp;
+
+    public Subject<Unit> OnSwipeUp {
+        get { return onSwipeUp; }
+    }
 
     private Subject<Unit> onTap = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnTap => onTap;
+
+    public Subject<Unit> OnTap {
+        get { return onTap; }
+    }
 
     private Subject<Unit> onDoubleTap = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnDoubletap => onDoubleTap;
+
+    public Subject<Unit> OnDoubleTap {
+        get { return onDoubleTap; }
+    }
     
     private Subject<Unit> onLongTap = new Subject<Unit>();
-    public UniRx.IObservable<Unit> OnLongTap => onLongTap;
 
+    public Subject<Unit> OnLongTap {
+        get { return onLongTap; }
+    }
 
     void OnEnable() {
         var eventTrigger = gameObject.AddComponent<ObservableEventTrigger>();
