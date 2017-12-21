@@ -21,7 +21,6 @@ public class DownloadImages : MonoBehaviour {
         cacheImages = new List<string>();
         spriteRenderer = GameObject.FindGameObjectWithTag("target").GetComponent<SpriteRenderer>();
         messageTextMesh = GameObject.FindGameObjectWithTag("message").GetComponent<TextMesh>();
-        var target = gameObject.AddComponent<ImageTargetBehaviour>();
         ObservableWWW.Get(API_SERVER_URL)
             .Select(text => new JSONObject(text))
             .SelectMany(jsonList => jsonList.list)
