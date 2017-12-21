@@ -883,7 +883,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - Keyword: back
+  - Keyword: view
     Response:
       m_PersistentCalls:
         m_Calls:
@@ -918,7 +918,7 @@ MonoBehaviour:
   Keywords:
   - Keyword: main
     KeyCode: 0
-  - Keyword: back
+  - Keyword: view
     KeyCode: 0
   recognitionConfidenceLevel: 1
 --- !u!1001 &651809203
