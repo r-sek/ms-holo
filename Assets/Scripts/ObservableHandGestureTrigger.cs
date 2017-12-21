@@ -1,7 +1,6 @@
 ﻿using HoloToolkit.Unity.InputModule;
 using UniRx;
 using UniRx.Triggers;
-using UnityEngine.EventSystems;
 
 public class ObservableHandGestureTrigger : ObservableTriggerBase, IInputHandler {
 
@@ -11,7 +10,7 @@ public class ObservableHandGestureTrigger : ObservableTriggerBase, IInputHandler
         onInputDown?.OnNext(eventData);
     }
 
-    public IObservable<InputEventData> OnInputDownObservable() {
+    public Subject<InputEventData> OnInputDownObservable() {
         return onInputDown ?? (onInputDown = new Subject<InputEventData>());
     }
 
@@ -21,7 +20,7 @@ public class ObservableHandGestureTrigger : ObservableTriggerBase, IInputHandler
          onInputUp?.OnNext(eventData);
     }
     
-    public IObservable<InputEventData> OnInputUpObservable() {
+    public Subject<InputEventData> OnInputUpObservable() {
         return onInputUp?? (onInputUp = new Subject<InputEventData>());
     }
     

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vuforia:
     vuforiaLicenseKey: AbX/IeD/////AAAAGYelb2PYE0lQhCc7xtRz83s5Nxz+Fn8tF2pWAXWBFPIjApWqswkWSmbKhzIY4bmScBeERHeUpswGUaObDP/mpH/iFXH30qszyZMeb2u2XglTI+iXCMfXddTUkg0zAA5jozEICKYigJkr0HWalExIvnRC/mb6O1tOofhbkB9kQHecn+gf6VdptKuys179kTCFQI+2WevF1DuED5KCZ/hdEKVSWkiWqTUlWllSX3hP+EvHJan+QG/kSnSoddY4id6mnqL5mI5+uUg3TDPE9xRLPXUyD0REEl+ktkpR1dNHdeOneN1zvuL1d92835KN5kSzfJmaFLRqlNc34dkYsDf0+hfw/rq0AmWrbeYaS4tP8YYq
-    ufoLicenseKey: QVlXOFpkdi8vLy8vQUFBQUtDeVQwT2dNSzBzVnJtbGU5cEFSTWlDQ2tGalk2ZDJxa1dzY0RlWk9QQjNkSWxzSjJsK1FmN1VzMytnQTU2WFhGWWRaOWNENWZvakZQT2ZydGFaR3BuVE5QbTU0VzZXS09JZnhNZTdWejJXOTk2Q0Fuei95MVNPNE5OeFZWM0x6aXU5cmJNNnVWRHBqYnpVZzVSbDB2YnlySG1wemV2dXJnV29qMG5pUW9NWnZ4TGwyb0c0d3FJVTM2amtGTjlacXhlWWJQaGJDSVE1bm1EaFY4eWowMFJNVVl0K2t6RGttVUc4U2VmcjN2b1hTdWZLWFk0c0hvQ0ErQ2lXMUlWaVhjSGhPOENjc2xqdzljU1BSSnhqL1lPNFRSTEVIeE16dDd4K080WUtGOGdHZm1DdWdlMlFkTTV2cjY2ajd6UTFPcGNsVmkzUk5YQVZhT1J0WmpuemhGOS9DaVlNQWp4QTU3cGdwMkRCZ1pEYUM=
+    ufoLicenseKey: QWY0M2ZRbi8vLy8vQUFBQUtCN2ZmZlhjTTBZWmdWdzFDUkpJb0wwYlhENnRobzhkS0Y1dU9YN0QxSUU3YkpsSHVMUFRJRVZmQzZ2emVnMmNLMFU3R0dGRmNWeWQvU2M5WFVmRzhNYThtWjcrbHh1ZVlzQ1NWdS9yYkhZd0dJeXNyTmRBd1IxYWtFdHB5Qm9Dc25ZMjJZdkNKemdNMjZaRjArVGlXMmsvYTVPTnQyNlk3aFBUWXNYd29XSVM0ODUrNlBmVmhWVHJoR2Vnek1aTXFrclIyTlVKdFNrcGZkVkZvL0Q3bm5ndkVWTnpnSjExdkYyWHo0R0lDVk1kNHkvN21NZXlFK3duYlBscWhwTFhJeWpKM0FEMnBqWmZCTGdaZXYvbWQ0SzQrdDBEcUcvNkl4TElJQ09HNU11MFpzeUFMMzdWOVZxQ2EwYXZ3aFhCa1d1ODlOUHNqTDVuVVJqYVpQeE94QkhIUjZBbU1PZUZxd0U5d3d3Y213dkk=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
     maxSimultaneousImageTargets: 1
@@ -25,10 +25,10 @@ MonoBehaviour:
     cameraOffset: 0.06
     distortionRenderingLayer: 31
     eyewearType: 1
-    stereoFramework: 1
+    stereoFramework: 0
     seeThroughConfiguration: 1
-    viewerName: Generic Cardboard
-    viewerManufacturer: Vuforia
+    viewerName: 
+    viewerManufacturer: 
     useCustomViewer: 0
     customViewer:
       Version: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
     videoBackgroundShader: {fileID: 15311, guid: 0000000000000000f000000000000000,
       type: 0}
     matteShader: {fileID: 15310, guid: 0000000000000000f000000000000000, type: 0}
-    videoBackgroundEnabled: 0
+    videoBackgroundEnabled: 1
   deviceTracker:
     autoInitTracker: 0
     autoStartTracker: 0
