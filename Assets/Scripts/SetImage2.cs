@@ -21,9 +21,10 @@ public class SetImage2 : MonoBehaviour {
 	public void Texturechange() {
 		if (count == 5) {
 			count = 0;
-		}
-		spriteRenderer.sprite = Resources.Load ("ImageTarget4/"+count,typeof(Sprite)) as Sprite;
-		messageTextMesh.text = mes[count];
+        }
+        spriteRenderer.sprite = Resources.Load ("ImageTarget4/"+count,typeof(Sprite)) as Sprite;
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        messageTextMesh.text = mes[count];
 		count++;
 	}
 }

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Networking;
 using Vuforia;
 
 public class DownloadImages : MonoBehaviour {
@@ -14,6 +16,7 @@ public class DownloadImages : MonoBehaviour {
     private List<string> cacheImages;
     private string tempDir = "";
     private ReactiveProperty<Love> viewLove;
+
     void Start() {
         count = 0;
         loves = new List<Love>();
@@ -21,35 +24,63 @@ public class DownloadImages : MonoBehaviour {
         cacheImages = new List<string>();
         spriteRenderer = GameObject.FindGameObjectWithTag("target").GetComponent<SpriteRenderer>();
         messageTextMesh = GameObject.FindGameObjectWithTag("message").GetComponent<TextMesh>();
-        ObservableWWW.Get(API_SERVER_URL)
-            .Select(text => new JSONObject(text))
-            .SelectMany(jsonList => jsonList.list)
-            .Select(CreateLove)
-            .Where(love => love.MediaType != Love.MediaTypeEnum.NONE)
-            .Subscribe(love => {
-                var url = SERVER_URL + love.MediaName;
-                var path = tempDir + "/" + love.MediaName;
-                loves.Add(love);
-                cacheImages.Add(path);
-                Debug.unityLogger.Log("loves", url);
-                Debug.unityLogger.Log("loves", loves.Count);
-                Debug.unityLogger.Log("loves", cacheImages.Count);
-                if (!File.Exists(path)) {
-                    Debug.unityLogger.Log("url", url);
-                    ObservableWWW.GetWWW(url)
-                        .Subscribe(
-                            success => {
-                                Debug.unityLogger.Log("pathpath", "pathpath");
-                                File.WriteAllBytes(path, success.bytes);
-                            },
-                            error => { Debug.Log("error1"); });
-                }
-            });
+
+        StartCoroutine(GetApi());
+
+//        ObservableWWW.Get(API_SERVER_URL)
+//            .Select(text => new JSONObject(text))
+//            .SelectMany(jsonList => jsonList.list)
+//            .Select(CreateLove)
+//            .Where(love => love.MediaType != Love.MediaTypeEnum.NONE)
+//            .Subscribe(
+//                love =>
+//                {
+//                    var url = SERVER_URL + love.MediaName;
+//                    var path = tempDir + "/" + love.MediaName;
+//                    loves.Add(love);
+//                    cacheImages.Add(path);
+//                    Debug.unityLogger.Log("loves", url);
+//                    Debug.unityLogger.Log("loves", loves.Count);
+//                    Debug.unityLogger.Log("loves", cacheImages.Count);
+//                    if (!File.Exists(path))
+//                    {
+//                        Debug.unityLogger.Log("url", url);
+//                        ObservableWWW.GetWWW(url)
+//                            .Subscribe(
+//                                success =>
+//                                {
+//                                    Debug.unityLogger.Log("pathpath", "pathpath");
+//                                    File.WriteAllBytes(path, success.bytes);
+//                                },
+//                                error => { Debug.Log("error1"); });
+//                    }
+//                }, 
+//                error => { Debug.Log("error2"); });
     }
 
 // Update is called once per frame
     void Update() {
     }
+
+    IEnumerator GetApi() {
+        
+        using (var www = UnityWebRequest.Get(API_SERVER_URL)) {
+            yield return www.SendWebRequest();
+            Debug.Log(www.responseCode);
+            if (www.responseCode != 200) {
+                Debug.Log("error");
+                Debug.Log(www.error);
+            } else {
+                Debug.Log(www.downloadHandler.text);
+                Observable.FromCoroutine(Download);
+            }
+        }
+    }
+
+    IEnumerator Download() {
+        yield return 0;
+    }
+
 
     public void Texturechange() {
         Debug.unityLogger.Log("count", count);
@@ -62,10 +93,9 @@ public class DownloadImages : MonoBehaviour {
         textures.LoadImage(Utilities.LoadbinaryBytes(cacheImages[count]));
         var x = -spriteRenderer.bounds.center.x / spriteRenderer.bounds.size.x + 0.5f;
         var y = -spriteRenderer.bounds.center.y / spriteRenderer.bounds.size.y + 0.5f;
-        var sprite =
-            Sprite.Create(textures, new Rect(0, 0, textures.width, textures.height),
-                new Vector2(x, y));
+        var sprite = Sprite.Create(textures, new Rect(0, 0, textures.width, textures.height), new Vector2(x, y));
         spriteRenderer.sprite = sprite;
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         var sizeX = sprite.bounds.size.x;
         var sizeY = sprite.bounds.size.y;
 
@@ -75,7 +105,7 @@ public class DownloadImages : MonoBehaviour {
         var scale = scaleX > scaleY ? scaleX : scaleY;
 
         GameObject.FindGameObjectWithTag("target").transform.localScale = new Vector3(scale, scale, 1.0f);
-	    messageTextMesh.text = loves[count].Message;
+        messageTextMesh.text = loves[count].Message;
         count++;
     }
 
@@ -86,6 +116,6 @@ public class DownloadImages : MonoBehaviour {
         var mediaName = json.GetField("media_name").str;
         var mediaType = json.GetField("media_type").str;
         var love = new Love(id, username, message, mediaName, mediaType);
-      return love;
+        return love;
     }
 }

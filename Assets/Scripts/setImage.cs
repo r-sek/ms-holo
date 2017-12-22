@@ -9,8 +9,7 @@ public class setImage : MonoBehaviour {
 	private string[] mes = {"とても好きです","うちの猫です","ハート","犬","可愛い"};
 	public SpriteRenderer spriteRenderer;
 	public TextMesh messageTextMesh;
-
-
+    
 	// Use this for initialization
 	void Start () {
 		
@@ -25,7 +24,8 @@ public class setImage : MonoBehaviour {
 			count = 0;
 		}
 		spriteRenderer.sprite = Resources.Load ("ImageTarget3/"+count,typeof(Sprite)) as Sprite;
-		messageTextMesh.text = mes[count];
+        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        messageTextMesh.text = mes[count];
 		count++;
 	}
 }
