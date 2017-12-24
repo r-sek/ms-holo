@@ -5367,7 +5367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setimage: {fileID: 1909946876}
   text: {fileID: 1945784886}
-  sprite: {fileID: 2064393527}
+  sprite: {fileID: 2042562724}
   board: {fileID: 135827173}
   ps: {fileID: 863534355}
 --- !u!114 &1909946876
