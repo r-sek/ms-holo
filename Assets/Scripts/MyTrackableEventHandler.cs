@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Vuforia;
 using System.Collections;
-using System.Collections.Generic;
+using HoloToolkit.Unity.InputModule;
 
 public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
     private TrackableBehaviour mTrackableBehaviour;
@@ -10,7 +10,6 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 	public GameObject cube;
 	public TextMesh textmesh;
 	private string textString;
-	private List<string> textArray;
 	private Sprite sprite;
 	private SpriteRenderer target;
 	private MeshRenderer text;
@@ -52,6 +51,7 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 		}
 		fadein = StartCoroutine (Fadein());
 		movie = StartCoroutine (Movie());
+	    InputManager.Instance.AddGlobalListener(gameObject);
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
     }
 
@@ -61,6 +61,7 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 			StopCoroutine (movie);
 		}
         fadeout = StartCoroutine (Fadeout());
+	    InputManager.Instance.RemoveGlobalListener(gameObject);
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
     }
 
@@ -71,8 +72,7 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 		yield return new WaitForSeconds (2.0f);
 	}
 	private IEnumerator Fadein(){
-		downloadimage.Texturechange();
-		textArray = new List<string>();
+//		downloadimage.Texturechange();
 		textString = textmesh.text;
 		string[] array = textString.Split('\n');
 		int maxstrLength = 0;

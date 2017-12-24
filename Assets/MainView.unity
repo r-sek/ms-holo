@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 150971356}
   - component: {fileID: 150971355}
   - component: {fileID: 150971354}
+  - component: {fileID: 150971361}
   m_Layer: 0
   m_Name: ImageTarget
   m_TagString: Untagged
@@ -484,6 +485,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &150971361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 150971353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d083ac6c770a7243a84fc5b9d40818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &165897555
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +510,7 @@ GameObject:
   - component: {fileID: 165897558}
   - component: {fileID: 165897557}
   - component: {fileID: 165897556}
+  - component: {fileID: 165897562}
   m_Layer: 0
   m_Name: ImageTarget2
   m_TagString: Untagged
@@ -611,6 +624,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165897562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 165897555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d083ac6c770a7243a84fc5b9d40818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &366516790
 Mesh:
   m_ObjectHideFlags: 0
@@ -921,6 +945,28 @@ MonoBehaviour:
   - Keyword: view
     KeyCode: 0
   recognitionConfidenceLevel: 1
+--- !u!114 &631720590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631720586}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37a6171019f6a044e9c666e5cfa0e9fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &631720591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631720586}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d083ac6c770a7243a84fc5b9d40818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!21 &701628959
 Material:
   serializedVersion: 6
@@ -1194,7 +1240,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -408613226
+  randomSeed: -956425033
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5300,6 +5346,7 @@ GameObject:
   - component: {fileID: 1909946877}
   - component: {fileID: 1909946876}
   - component: {fileID: 1909946875}
+  - component: {fileID: 1909946882}
   m_Layer: 0
   m_Name: ImageTarget3
   m_TagString: Untagged
@@ -5320,7 +5367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setimage: {fileID: 1909946876}
   text: {fileID: 1945784886}
-  sprite: {fileID: 1969779054}
+  sprite: {fileID: 2064393527}
   board: {fileID: 135827173}
   ps: {fileID: 863534355}
 --- !u!114 &1909946876
@@ -5430,6 +5477,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909946882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909946874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d083ac6c770a7243a84fc5b9d40818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1926472208
 GameObject:
   m_ObjectHideFlags: 0
@@ -5445,6 +5503,7 @@ GameObject:
   - component: {fileID: 1926472211}
   - component: {fileID: 1926472210}
   - component: {fileID: 1926472209}
+  - component: {fileID: 1926472216}
   m_Layer: 0
   m_Name: ImageTarget4
   m_TagString: Untagged
@@ -5574,6 +5633,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926472216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1926472208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d083ac6c770a7243a84fc5b9d40818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1945784884
 GameObject:
   m_ObjectHideFlags: 0

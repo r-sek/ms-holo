@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Vuforia;
 using System.Collections;
+using HoloToolkit.Unity.InputModule;
 using UnityEngine.Video;
 
 public class VideoScripts : MonoBehaviour, ITrackableEventHandler {
@@ -45,6 +46,7 @@ public class VideoScripts : MonoBehaviour, ITrackableEventHandler {
 		target.material.color += alpha;
 		target.enabled = true;
 		vp.Play ();
+		InputManager.Instance.AddGlobalListener(gameObject);
 		Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 	}
 
@@ -54,6 +56,7 @@ public class VideoScripts : MonoBehaviour, ITrackableEventHandler {
 		}
 
 		fadeout = StartCoroutine(Fadeout());
+		InputManager.Instance.RemoveGlobalListener(gameObject);
 		Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
 	}
 
