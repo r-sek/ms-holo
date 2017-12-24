@@ -6,6 +6,7 @@ Confidential and Proprietary - Protected under copyright and other laws.
 
 using UnityEngine;
 using System.Collections;
+using HoloToolkit.Unity.InputModule;
 
 namespace Vuforia
 {
@@ -79,10 +80,10 @@ namespace Vuforia
 		private void OnTrackingFound()
 		{
 			movie = StartCoroutine (Movie());
-			setimage.Texturechange ();
 			text.enabled = true;
 			sprite.enabled = true;
 			board.enabled = true;
+			InputManager.Instance.AddGlobalListener(gameObject);
 			Debug.Log ("FoundMarker4");
 		}
 		private void OnTrackingLost()
@@ -93,6 +94,7 @@ namespace Vuforia
 			text.enabled = false;
 			sprite.enabled = false;
 			board.enabled = false;
+			InputManager.Instance.RemoveGlobalListener(gameObject);
 			Debug.Log ("LostMarker4");
 		}
 

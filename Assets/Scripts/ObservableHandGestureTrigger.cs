@@ -30,7 +30,6 @@ public class ObservableHandGestureTrigger : ObservableTriggerBase, IInputHandler
         }
         if (onInputUp!=null) {
             onInputUp.OnCompleted();
-            
         }
     }
 }
