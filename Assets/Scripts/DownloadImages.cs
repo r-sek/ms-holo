@@ -81,12 +81,7 @@ public class DownloadImages : MonoBehaviour {
             using (var image = UnityWebRequest.Get(url))
             {
 
-                image.SendWebRequest();
-
-                while (!image.isDone) {
-                   yield return null;
-                }
-
+                yield return image.SendWebRequest();
 
                 Debug.Log(image.responseCode);
                 if (image.responseCode != 200 && string.IsNullOrEmpty(image.error))
