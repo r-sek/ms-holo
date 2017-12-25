@@ -34,7 +34,6 @@ QualitySettings:
     asyncUploadBufferSize: 4
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms:
-    - Windows Store Apps
     - Standalone
     - Android
   - serializedVersion: 2
@@ -188,7 +187,8 @@ QualitySettings:
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 4
     resolutionScalingFixedDPIFactor: 1
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Windows Store Apps
   m_PerPlatformDefaultQuality:
     Android: 5
     Nintendo 3DS: 5

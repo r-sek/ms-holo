@@ -14,22 +14,19 @@ public class SetImage2 : MonoBehaviour {
     void Start() {
         Texturechange(0);
         handGesture = GetComponent<HandGesture>();
-        handGesture.OnSwipeRight
-            .ThrottleFirst(TimeSpan.FromMilliseconds(800))
-            .Subscribe(s => {
-                Debug.Log("右");
-                Texturechange(1);
-            });
-        handGesture.OnSwipeLeft
-            .ThrottleFirst(TimeSpan.FromMilliseconds(800))
-            .Subscribe(s => {
-                Debug.Log("左");
-                Texturechange(-1);
-            });
+        handGesture.OnSwipeRight.ThrottleFirst(TimeSpan.FromMilliseconds(800)).Subscribe(s => {
+            Debug.Log("右");
+            Texturechange(1);
+        });
+        handGesture.OnSwipeLeft.ThrottleFirst(TimeSpan.FromMilliseconds(800)).Subscribe(s => {
+            Debug.Log("左");
+            Texturechange(-1);
+        });
     }
 
     // Update is called once per frame
-    void Update() { }
+    void Update() {
+    }
 
     public void Texturechange(int index) {
         count += index;
