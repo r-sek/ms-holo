@@ -90,13 +90,12 @@ public class DownloadImages : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.unityLogger.Log("pathpath", "pathpath");
+                    Debug.unityLogger.Log("pathpath", path);
                     File.WriteAllBytes(path, image.downloadHandler.data);
                 }
             }
         }
     }
-
 
     public void Texturechange(int index) {
         Debug.unityLogger.Log("count", count);
@@ -111,18 +110,20 @@ public class DownloadImages : MonoBehaviour {
             count = 0;
             return;
         }
-        texture.LoadImage(Utilities.LoadbinaryBytes(cacheImages[count]));
-        var x = -spriteRenderer.bounds.center.x / spriteRenderer.bounds.size.x + 0.5f;
-        var y = -spriteRenderer.bounds.center.y / spriteRenderer.bounds.size.y + 0.5f;
-        sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(x, y));
-        spriteRenderer.sprite = sprite;
-        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        var sizeX = sprite.bounds.size.x;
-        var sizeY = sprite.bounds.size.y;
-        var scaleX = 1.0f / sizeX;
-        var scaleY = 1.0f / sizeY;
-        var scale = scaleX > scaleY ? scaleX : scaleY;
-        GameObject.FindGameObjectWithTag("target").transform.localScale = new Vector3(scale, scale, 1.0f);
+//        texture.LoadImage(Utilities.LoadbinaryBytes(cacheImages[count]));
+//        var x = -spriteRenderer.bounds.center.x / spriteRenderer.bounds.size.x + 0.5f;
+//        var y = -spriteRenderer.bounds.center.y / spriteRenderer.bounds.size.y + 0.5f;
+//        sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(x, y));
+        spriteRenderer.sprite =
+            Utilities.GetSpriteFromTexture2D(Utilities.GetTexture2DFromBytes(Utilities.LoadbinaryBytes(cacheImages[count])));
+//        spriteRenderer.sprite = sprite;
+//        spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+//        var sizeX = sprite.bounds.size.x;
+//        var sizeY = sprite.bounds.size.y;
+//        var scaleX = 1.0f / sizeX;
+//        var scaleY = 1.0f / sizeY;
+//        var scale = scaleX > scaleY ? scaleX : scaleY;
+//        GameObject.FindGameObjectWithTag("target").transform.localScale = new Vector3(scale, scale, 1.0f);
         messageTextMesh.text = loves[count].Message;
     }
 
