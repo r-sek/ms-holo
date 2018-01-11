@@ -51,7 +51,8 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 		}
 		fadein = StartCoroutine (Fadein());
 		movie = StartCoroutine (Movie());
-	    InputManager.Instance.AddGlobalListener(gameObject);
+        InputManager.Instance.AddGlobalListener(gameObject);
+
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
     }
 
@@ -61,7 +62,9 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 			StopCoroutine (movie);
 		}
         fadeout = StartCoroutine (Fadeout());
-	    InputManager.Instance.RemoveGlobalListener(gameObject);
+        InputManager.Instance.RemoveGlobalListener(gameObject);
+
+
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
     }
 
@@ -99,8 +102,8 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler {
 		Color alpha = new Color (0f,0f,0f,0.05f);
 		for (; target.material.color.a < 1; target.material.color += alpha) {
 			yield return new WaitForSeconds (0.001f);
-		}
-	}
+        }
+    }
 	private IEnumerator Fadeout(){
 		textCanvas.enabled = false;
 		text.enabled = false;
